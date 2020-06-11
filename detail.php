@@ -11,6 +11,7 @@
     src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
     crossorigin="anonymous"></script>
+    <script src="https://www.mercadopago.com/v2/security.js" view="item"></script>
 
     <link rel="stylesheet" href="./assets/category-landing.css" media="screen, print">
 
@@ -139,6 +140,8 @@
                                         // Agrega credenciales
                                         MercadoPago\SDK::setAccessToken('APP_USR-6317427424180639-042414-47e969706991d3a442922b0702a0da44-469485398');
 
+                                        MercadoPago\SDK::setIntegratorId("dev_24c65fb163bf11ea96500242ac130004");
+
                                         // Crea un objeto de preferencia
                                         $preference = new MercadoPago\Preference();
 
@@ -154,13 +157,45 @@
                                         );
                                         // ...
 
+                                        $preference->back_urls = array(
+                                            "success" => "https://www.tu-sitio/success",
+                                            "failure" => "http://www.tu-sitio/failure",
+                                            "pending" => "http://www.tu-sitio/pending"
+                                        );
+                                        $preference->auto_return = "approved";
+
+                                        $payer = new MercadoPago\Payer();
+                                        $payer->name = "Lalo";
+                                        $payer->surname = "Landa";
+                                        $payer->email = "test_user_63274575@testuser.com";
+                                        $payer->phone = array(
+                                            "area_code" => "11",
+                                            "number" => "22223333"
+                                        );
+                                        
+                                        $payer->identification = array(
+                                            "type" => "DNI",
+                                            "number" => "12345678"
+                                        );
+                                        
+                                        $payer->address = array(
+                                            "street_name" => "False",
+                                            "street_number" => 123,
+                                            "zip_code" => "1111"
+                                        );
+                                        $preference->payer = $payer;
+
                                         // Crea un ítem en la preferencia
                                         $item = new MercadoPago\Item();
+                                        $item->id = 1234;
                                         $item->title = $_POST['title'];
+                                        $item->description = "​Dispositivo móvil de Tienda e-commerce​";
                                         $item->quantity = $_POST['unit'];
                                         $item->unit_price = $_POST['price'];
                                         $item->picture_url =  $url . substr($_POST['img'], 2);
                                         $preference->items = array($item);
+
+                                        $preference->external_reference = "ferrariomatias@gmail.com";
                                         $preference->save();
                                     ?>
 
