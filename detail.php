@@ -158,11 +158,13 @@
                                         // ...
 
                                         $preference->back_urls = array(
-                                            "success" => "https://www.tu-sitio/success",
-                                            "failure" => "http://www.tu-sitio/failure",
-                                            "pending" => "http://www.tu-sitio/pending"
+                                            "success" => $url . "success.php",
+                                            "failure" => $url . "failure.php",
+                                            "pending" => $url . "pending.php"
                                         );
                                         $preference->auto_return = "approved";
+
+                                        $preference->notification_url = $url . "notifications";
 
                                         $payer = new MercadoPago\Payer();
                                         $payer->name = "Lalo";
