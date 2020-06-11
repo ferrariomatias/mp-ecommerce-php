@@ -26,10 +26,9 @@ if (!is_array($decoded)) {
 }
  
 //Process the JSON.
-file_put_contents('php://stderr', print_r('CONTENIDO', true));
+file_put_contents('php://stderr', print_r('NOTIFICACION RECIBIDA: ', true));
 file_put_contents('php://stderr', print_r($content, true));
-file_put_contents('php://stderr', print_r('DECODED', true));
-file_put_contents('php://stderr', print_r($decoded, true));
+
 
 switch ($_POST["type"]) {
     case "payment":
@@ -45,4 +44,3 @@ switch ($_POST["type"]) {
         $plan = MercadoPago\Invoice::find_by_id($_POST["id"]);
         break;
 }
-
