@@ -1,6 +1,7 @@
 <?php
 require __DIR__ .  '/vendor/autoload.php';
 MercadoPago\SDK::setAccessToken("APP_USR-6317427424180639-042414-47e969706991d3a442922b0702a0da44-469485398");
+file_put_contents('php://stderr', print_r('hola', true));
 
 switch ($_POST["type"]) {
     case "payment":
@@ -16,4 +17,4 @@ switch ($_POST["type"]) {
         $plan = MercadoPago\Invoice::find_by_id($_POST["id"]);
         break;
 }
-file_put_contents('php://stderr', print_r('hola', true));
+
