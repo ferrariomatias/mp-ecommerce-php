@@ -163,8 +163,8 @@
                                             "pending" => $url . "pending.php"
                                         );
                                         $preference->auto_return = "approved";
-
-                                        $preference->notification_url = $url . "notifications";
+                                        //Enviar la URL donde se van a recibir las notificaciones de pago.
+                                        $preference->notification_url = $url . "notifications.php";
 
                                         $payer = new MercadoPago\Payer();
                                         $payer->name = "Lalo";
@@ -173,11 +173,6 @@
                                         $payer->phone = array(
                                             "area_code" => "11",
                                             "number" => "22223333"
-                                        );
-                                        
-                                        $payer->identification = array(
-                                            "type" => "DNI",
-                                            "number" => "12345678"
                                         );
                                         
                                         $payer->address = array(
@@ -192,14 +187,16 @@
                                         $item->id = 1234;
                                         $item->title = $_POST['title'];
                                         $item->description = "​Dispositivo móvil de Tienda e-commerce​";
-                                        $item->quantity = $_POST['unit'];
-                                        $item->unit_price = $_POST['price'];
                                         $item->picture_url =  $url . substr($_POST['img'], 2);
+                                        $item->quantity = 1;
+                                        $item->unit_price = $_POST['price'];
                                         $preference->items = array($item);
 
                                         $preference->external_reference = "ferrariomatias@gmail.com";
                                         $preference->save();
-                                    ?>
+
+                                        echo $item->picture_url;
+                                        ?>
 
                                     <a class="mercadopago-button" href="<?php echo $preference->init_point; ?>">Pagar la compra</a>
                                 </div>
