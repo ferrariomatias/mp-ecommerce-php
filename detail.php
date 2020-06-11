@@ -128,11 +128,14 @@
                                         </h3>
                                         <h3 >
                                             <?php echo $_POST['unit'] ?>
+                                            <?php echo $_POST['img'] ?>
                                         </h3>
                                     </div>
                                     <?php
                                         // SDK de Mercado Pago
                                         require __DIR__ .  '/vendor/autoload.php';
+
+                                        $url = 'https://ferrariomatias-mp-ecommerce-ph.herokuapp.com/';
 
                                         // Agrega credenciales
                                         MercadoPago\SDK::setAccessToken('APP_USR-6317427424180639-042414-47e969706991d3a442922b0702a0da44-469485398');
@@ -140,22 +143,29 @@
                                         // Crea un objeto de preferencia
                                         $preference = new MercadoPago\Preference();
 
+                                        // ...
+                                        $preference->payment_methods = array(
+                                            "excluded_payment_methods" => array(
+                                            array("id" => "amex")
+                                            ),
+                                            "excluded_payment_types" => array(
+                                            array("id" => "atm")
+                                            ),
+                                            "installments" => 6
+                                        );
+                                        // ...
+
                                         // Crea un ítem en la preferencia
                                         $item = new MercadoPago\Item();
                                         $item->title = $_POST['title'];
                                         $item->quantity = $_POST['unit'];
                                         $item->unit_price = $_POST['price'];
+                                        $item->picture_url =  $url . $_POST['img'];
                                         $preference->items = array($item);
                                         $preference->save();
                                     ?>
 
-                                    <form action="/procesar-pago" method="POST">
-                                    <script
-                                    src="https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js"
-                                    data-preference-id="<?php echo $preference->id; ?>">
-                                    </script>
-                                    </form>
-                                    <a href="<?php echo $preference->init_point; ?>">Pagar la compra</a>
+                                    <a class="mercadopago-button" href="<?php echo $preference->init_point; ?>">Pagar la compra</a>
                                 </div>
                             </div>
                         </div>
