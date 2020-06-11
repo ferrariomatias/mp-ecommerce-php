@@ -195,7 +195,6 @@
                                         $preference->external_reference = "ferrariomatias@gmail.com";
                                         $preference->save();
 
-                                        echo $item->picture_url;
                                         ?>
 
                                     <a class="mercadopago-button" href="<?php echo $preference->init_point; ?>">Pagar la compra</a>
