@@ -128,7 +128,6 @@
                                         </h3>
                                         <h3 >
                                             <?php echo $_POST['unit'] ?>
-                                            <?php echo $_POST['img'] ?>
                                         </h3>
                                     </div>
                                     <?php
@@ -160,7 +159,7 @@
                                         $item->title = $_POST['title'];
                                         $item->quantity = $_POST['unit'];
                                         $item->unit_price = $_POST['price'];
-                                        $item->picture_url =  $url . $_POST['img'];
+                                        $item->picture_url =  $url . substr($_POST['img'], 2);
                                         $preference->items = array($item);
                                         $preference->save();
                                     ?>
